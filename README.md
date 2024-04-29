@@ -1,5 +1,5 @@
 # Ansible Role: ha-kubernetes
-## Fork of (gadgieOps.ha-kubernetes)[https://github.com/gadgieOps/ha-kubernetes.git]
+## Fork of [gadgieOps.ha-kubernetes](https://github.com/gadgieOps/ha-kubernetes.git)
 
 =========
 
