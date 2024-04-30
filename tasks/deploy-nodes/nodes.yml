@@ -45,5 +45,6 @@
   register: joined
 
 - name: Join the remaining nodes to the cluster
+  ignore_errors: true
   ansible.builtin.command: kubeadm join --config /etc/kubernetes/join.config
   when: not joined.stat.exists
