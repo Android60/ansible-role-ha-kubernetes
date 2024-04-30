@@ -1,0 +1,11 @@
+---
+- name: Restart HAProxy
+  ansible.builtin.service:
+    name: haproxy
+    enabled: true
+    state: restarted
+
+- name: Restart containerd
+  ansible.builtin.service:
+    name: containerd
+    state: restarted
