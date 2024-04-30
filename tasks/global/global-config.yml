@@ -6,15 +6,12 @@
 #
 
 - name: Remove cri from disabled plugins list
+  notify:
+    - Restart containerd
   ansible.builtin.lineinfile:
     path: /etc/containerd/config.toml
     state: absent
     line: disabled_plugins = ["cri"]
-
-- name: Restart containerd
-  ansible.builtin.service:
-    name: containerd
-    state: restarted
 
 ###
 # Disable swap

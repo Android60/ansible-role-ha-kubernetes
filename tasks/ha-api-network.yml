@@ -43,6 +43,8 @@
           - chk_haproxy
 
 - name: Add HAProxy config
+  notify:
+    - Restart HAProxy
   ansible.builtin.template:
     src: haproxy.cfg.j2
     dest: /etc/haproxy/haproxy.cfg
@@ -54,7 +56,7 @@
   ansible.builtin.service:
     name: haproxy
     enabled: true
-    state: restarted
+    state: started
 
 - name: Wait for API Reachability
   ansible.builtin.wait_for:
