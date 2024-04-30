@@ -9,3 +9,8 @@
   ansible.builtin.service:
     name: containerd
     state: restarted
+
+- name: Restart kubelet
+  ansible.builtin.service:
+    name: kubelet
+    state: restarted
