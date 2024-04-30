@@ -38,7 +38,7 @@
         authentication_password: fregsr9
         vips:
           - "{{ vrrp_virtual_ip }} dev {{ cluster_interface }}"
-        unicast_peers: "{{ groups.controllers | map('extract', hostvars, ['node_ip']) | list }}"
+        unicast_peers: "{{ groups.controllers | map('extract', hostvars, ['node_ip']) | list | symmetric_difference([node_ip])}}"
         track_scripts:
           - chk_haproxy
 
