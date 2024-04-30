@@ -57,6 +57,9 @@
   # Enable HA networking on controller nodes
   #
 
+- name: Flush handlers
+  meta: flush_handlers
+
 - name: Setup HA networking
   ansible.builtin.include_tasks: ha-api-network.yml
   when: inventory_hostname in groups.controllers
@@ -65,6 +68,10 @@
   # Install kubernetes and deploy the cluster
   #
 
+
+- name: Flush handlers
+  meta: flush_handlers
+
 - name: Deploy cluster
   ansible.builtin.include_tasks: deploy-nodes/deploy-cluster.yml
 
@@ -72,9 +79,15 @@
   # Set kubeconfig on the cluster and ansible controller
   #
 
+- name: Flush handlers
+  meta: flush_handlers
+
 - name: Set kubeconfigs on controllers
   ansible.builtin.include_tasks: deploy-nodes/set-kubeconfig.yml
   when: inventory_hostname in groups.controllers
+
+- name: Flush handlers
+  meta: flush_handlers
 
 - name: Download kubeconfig to host
   ansible.builtin.fetch:
