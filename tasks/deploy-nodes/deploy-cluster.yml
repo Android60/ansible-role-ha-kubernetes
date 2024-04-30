@@ -18,6 +18,23 @@
   # Install Kubernetes and Deploy Cluster
   #
 
+- name: Restart containerd
+  ansible.builtin.service:
+    name: containerd
+    state: restarted
+
+- name: Restart kubelet
+  ignore_errors: true
+  ansible.builtin.service:
+    name: kubelet
+    state: restarted
+
+- name: Wait for API Reachability
+  ansible.builtin.wait_for:
+    host: "{{ vrrp_virtual_ip }}"
+    port: "{{ haproxy_listen_port }}"
+    delay: 2
+
 - name: Install Kubernetes and start cluster
   ansible.builtin.include_role:
     name: geerlingguy.kubernetes
@@ -46,6 +63,15 @@
     kubernetes_pod_network:
       cni: "{{ cni }}"
       cidr: "{{ pod_subnet }}"
+
+- name: Flush handlers
+  meta: flush_handlers
+
+- name: Wait for API Reachability
+  ansible.builtin.wait_for:
+    host: "{{ vrrp_virtual_ip }}"
+    port: "{{ haproxy_listen_port }}"
+    delay: 2
 
 - name: Generate join credentials
   ansible.builtin.include_tasks: lead-controller.yml
